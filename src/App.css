@@ -1,0 +1,80 @@
+
+
+  
+  .dropdown-toggle {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    min-width: 160px;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+
+
+
+ 
+
+
+  .registro-ponto-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .botoes-centrais {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+  }
+  
+  .botao-entrada, .botao-saida {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .botao-saida {
+    background-color: red;
+    color: white;
+    padding: 10px;
+  }
+  
+  select {
+    margin: 10px;
+    padding: 5px;
+  }
+
+  .relatorio-ponto-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  select {
+    margin: 10px;
+    padding: 5px;
+  }
