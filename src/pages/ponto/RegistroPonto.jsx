@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import "./RelatorioPonto.css";
 
 export default function RegistroPonto() {
   const [registros, setRegistros] = useState([]);
@@ -10,44 +10,45 @@ export default function RegistroPonto() {
   const [selectedCargo, setSelectedCargo] = useState('');
 
   useEffect(() => {
-    // Fetch data from the backend (replace with actual API calls)
     fetchFuncionarios();
     fetchCargos();
   }, []);
 
   const fetchFuncionarios = async () => {
-    // Fetch funcionarios from the backend (replace with actual API call)
     const response = await fetch('/api/funcionarios');
     const data = await response.json();
     setFuncionarios(data);
   };
 
   const fetchCargos = async () => {
-    // Fetch cargos from the backend (replace with actual API call)
     const response = await fetch('/api/cargos');
     const data = await response.json();
     setCargos(data);
   };
 
-  const registrarEntrada = () => {
+  const horaEntrada = () => {
     const novoRegistro = {
       tipo: 'Entrada',
       hora: new Date().toLocaleTimeString(),
       funcionario: selectedFuncionario,
-      cargo: selectedCargo
+      cargo: selectedCargo,
+      data: new Date().toLocaleDateString()
     };
     setRegistros([...registros, novoRegistro]);
   };
 
-  const registrarSaida = () => {
+  const horaSaida = () => {
     const novoRegistro = {
       tipo: 'Saída',
       hora: new Date().toLocaleTimeString(),
       funcionario: selectedFuncionario,
-      cargo: selectedCargo
+      cargo: selectedCargo,
+      data: new Date().toLocaleDateString()
     };
     setRegistros([...registros, novoRegistro]);
   };
+
+ 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -80,18 +81,30 @@ export default function RegistroPonto() {
         </div>
       </div>
       <div className="botoes-centrais">
-        <button onClick={registrarEntrada} className="botao-entrada">Registrar Entrada</button>
-        <button onClick={registrarSaida} className="botao-saida">Registrar Saída</button>
+        <button onClick={horaEntrada} className="botao-entrada">Registrar Entrada</button>
+        <button onClick={horaSaida} className="botao-saida">Registrar Saída</button>
+        
       </div>
-      <div className="historia-registros">
+      <div className="histor-registros">
         <h3>Histórico de Registros</h3>
-        <ul>
-          {registros.map((registro, index) => (
-            <li key={index}>
-              {registro.tipo} às {registro.hora} - {registro.funcionario} ({registro.cargo})
-            </li>
-          ))}
-        </ul>
+        <table className="registro-table">
+          <thead>
+            <tr>
+              <th>Funcionário</th>
+              <th>Hora</th>
+              <th>Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            {registros.map((registro, index) => (
+              <tr key={index}>
+                <td>{registro.funcionario}</td>
+                <td>{registro.hora}</td>
+                <td>{registro.data}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

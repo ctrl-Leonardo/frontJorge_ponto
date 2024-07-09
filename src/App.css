@@ -1,80 +1,144 @@
+.registro-ponto-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.label-selecionar {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.label-selecionar div {
+  display: flex;
+  flex-direction: column;
+}
+
+.botoes-centrais {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.botao-entrada, .botao-saida {
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.botao-entrada {
+  background-color: green;
+}
+
+.botao-saida {
+  background-color: red;
+}
+
+.botao-entrada:hover, .botao-saida:hover {
+  transform: scale(1.05);
+}
+
+.historico-registros {
+  margin-top: 40px;
+}
+
+.registro-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.registro-table th, .registro-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.registro-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.registro-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.registro-table tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+select {
+  margin: 10px;
+  padding: 5px;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 160px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.relatorio-ponto-container {
+  text-align: center;
+  padding: 20px;
+}
+.relatorio-ponto-container {
+  position: relative;
+}
+
+.botao-xml {
+  position: absolute;
+  top: 20px; /* Distância do topo do contêiner pai */
+  right: 20px; /* Distância da direita do contêiner pai */
+  z-index: 1000; /* Z-index para garantir que fique acima de outros elementos, se necessário */
+  margin: 0; /* Para garantir que não haja margem extra */
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-xml:hover {
+  background-color: #0056b3;
+}
 
 
-  
-  .dropdown-toggle {
-    cursor: pointer;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    min-width: 160px;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
 
+.sua-classe {
+  overflow-y: auto; /* Adiciona uma barra de rolagem apenas quando necessário */
+  /* ou */
+  overflow-y: scroll; /* Força a exibição permanente da barra de rolagem vertical */
+}
 
-
- 
-
-
-  .registro-ponto-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .botoes-centrais {
-    display: flex;
-    justify-content: center;
-    margin: 50px 0;
-  }
-  
-  .botao-entrada, .botao-saida {
-    border: none;
-    border-radius: 5px;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .botao-saida {
-    background-color: red;
-    color: white;
-    padding: 10px;
-  }
-  
-  select {
-    margin: 10px;
-    padding: 5px;
-  }
-
-  .relatorio-ponto-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  select {
-    margin: 10px;
-    padding: 5px;
-  }

@@ -59,7 +59,7 @@ h3 {
 
 /* RelatorioPonto.css */
 
-.relatorio-ponto-container {
+.historico-registros {
     padding: 20px;
   }
   
@@ -109,4 +109,5 @@ body {
     background-color: #333;
     color: #fff;
   }
-  
+
+ 
