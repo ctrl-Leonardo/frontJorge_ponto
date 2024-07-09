@@ -15,16 +15,31 @@ export default function RegistroPonto() {
   }, []);
 
   const fetchFuncionarios = async () => {
-    const response = await fetch('/api/funcionarios');
-    const data = await response.json();
-    setFuncionarios(data);
+    try {
+      const response = await fetch('/api/funcionarios');
+      if (!response.ok) {
+        throw new Error("Erro ao buscar os posts: " + response.statusText);
+      }
+      const data = await response.json();
+      setFuncionarios(data);
+    } catch (error) {
+      setError(error.message);
+    }
   };
-
+  
   const fetchCargos = async () => {
-    const response = await fetch('/api/cargos');
-    const data = await response.json();
-    setCargos(data);
+    try {
+      const response = await fetch('/api/cargos');
+      if (!response.ok) {
+        throw new Error("Erro ao buscar os posts: " + response.statusText);
+      }
+      const data = await response.json();
+      setCargos(data);
+    } catch (error) {
+      setError(error.message);
+    }
   };
+  
 
   const horaEntrada = () => {
     const novoRegistro = {

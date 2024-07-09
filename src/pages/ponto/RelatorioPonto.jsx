@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './RelatorioPonto.css'; // Importe o arquivo CSS de estilos
+import './RelatorioPonto.css'; 
 
 export default function RelatorioPonto() {
   const [registros, setRegistros] = useState([]);
@@ -42,33 +42,6 @@ export default function RelatorioPonto() {
       ];
       
     setRegistros(dataExemplo); // Substitua por setRegistros(data) quando usar dados reais
-  };
-
-  const gerarXML = () => {
-    const registrosXML = registros.map(registro => `
-      <registro>
-        <funcionario>${registro.funcionario}</funcionario>
-        <cargo>${registro.cargo}</cargo>
-        <tipo>${registro.tipo}</tipo>
-        <hora>${registro.hora}</hora>
-        <data>${registro.data}</data>
-      </registro>
-    `).join('');
-
-    const xmlContent = `
-      <registros>
-        ${registrosXML}
-      </registros>
-    `;
-
-    const blob = new Blob([xmlContent], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'registros.xml';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
   };
 
   return (
