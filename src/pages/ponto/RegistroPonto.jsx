@@ -8,6 +8,7 @@ export default function RegistroPonto() {
   const [cargos, setCargos] = useState([]);
   const [selectedFuncionario, setSelectedFuncionario] = useState('');
   const [selectedCargo, setSelectedCargo] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchFuncionarios();
@@ -39,9 +40,8 @@ export default function RegistroPonto() {
       setError(error.message);
     }
   };
-  
 
-  const horaEntrada = () => {
+  const horaEntrada = async () => {
     const novoRegistro = {
       tipo: 'Entrada',
       hora: new Date().toLocaleTimeString(),
@@ -49,10 +49,28 @@ export default function RegistroPonto() {
       cargo: selectedCargo,
       data: new Date().toLocaleDateString()
     };
-    setRegistros([...registros, novoRegistro]);
+
+    try {
+      const response = await fetch('/api/registros', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(novoRegistro)
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao registrar a entrada: " + response.statusText);
+      }
+
+      const data = await response.json();
+      setRegistros([...registros, data]);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
-  const horaSaida = () => {
+  const horaSaida = async () => {
     const novoRegistro = {
       tipo: 'Saída',
       hora: new Date().toLocaleTimeString(),
@@ -60,10 +78,26 @@ export default function RegistroPonto() {
       cargo: selectedCargo,
       data: new Date().toLocaleDateString()
     };
-    setRegistros([...registros, novoRegistro]);
-  };
 
- 
+    try {
+      const response = await fetch('/api/registros', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(novoRegistro)
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao registrar a saída: " + response.statusText);
+      }
+
+      const data = await response.json();
+      setRegistros([...registros, data]);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -98,13 +132,14 @@ export default function RegistroPonto() {
       <div className="botoes-centrais">
         <button onClick={horaEntrada} className="botao-entrada">Registrar Entrada</button>
         <button onClick={horaSaida} className="botao-saida">Registrar Saída</button>
-        
       </div>
-      <div className="histor-registros">
+      <div className="historico-registros">
         <h3>Histórico de Registros</h3>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <table className="registro-table">
           <thead>
             <tr>
+              <th>Tipo</th>
               <th>Funcionário</th>
               <th>Hora</th>
               <th>Data</th>
@@ -113,6 +148,7 @@ export default function RegistroPonto() {
           <tbody>
             {registros.map((registro, index) => (
               <tr key={index}>
+                <td>{registro.tipo}</td>
                 <td>{registro.funcionario}</td>
                 <td>{registro.hora}</td>
                 <td>{registro.data}</td>

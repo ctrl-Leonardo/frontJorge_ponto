@@ -9,7 +9,7 @@ import Admissao from './pages/admissao/Admissao';
 import Ponto from './pages/ponto/Ponto';
 import RegistroPonto from './pages/ponto/RegistroPonto';
 import RelatorioPonto from './pages/ponto/RelatorioPonto';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+
 
 export default function App() {
   return (

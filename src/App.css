@@ -115,4 +115,30 @@ select {
   position: relative;
 }
 
+.botao-xml {
+  position: absolute;
+  top: 20px; /* Distância do topo do contêiner pai */
+  right: 20px; /* Distância da direita do contêiner pai */
+  z-index: 1000; /* Z-index para garantir que fique acima de outros elementos, se necessário */
+  margin: 0; /* Para garantir que não haja margem extra */
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-xml:hover {
+  background-color: #0056b3;
+}
+
+
+
+.sua-classe {
+  overflow-y: auto; /* Adiciona uma barra de rolagem apenas quando necessário */
+  /* ou */
+  overflow-y: scroll; /* Força a exibição permanente da barra de rolagem vertical */
+}
 

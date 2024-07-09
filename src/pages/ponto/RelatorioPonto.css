@@ -110,4 +110,65 @@ body {
     color: #fff;
   }
 
+  .relatorio-ponto-container {
+    padding: 20px;
+  }
+  
+  .filtros-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filtros-container > div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .botao-pesquisar {
+    align-self: flex-end;
+    padding: 5px 10px;
+    margin-top: 18px;
+  }
+  
+  .botao-xml {
+    padding: 5px 10px;
+    margin-bottom: 20px;
+  }
+  
+  .registro-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .registro-table th, .registro-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .registro-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .botao-pesquisar {
+    background-color: #4CAF50; /* Cor de fundo verde */
+    border: none;
+    color: white; /* Cor do texto branca */
+    padding: 8px 16px; /* Reduzindo o padding interno */
+    text-align: center; /* Alinhamento do texto */
+    text-decoration: none; /* Remoção do sublinhado padrão */
+    display: inline-block;
+    font-size: 14px; /* Reduzindo o tamanho da fonte */
+    border-radius: 6px; /* Borda arredondada */
+    cursor: pointer; /* Cursor ao passar por cima */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s; /* Transições suaves */
+  }
+  
+  .botao-pesquisar:hover {
+    background-color: #45a049; /* Cor de fundo verde mais escura ao passar o mouse */
+    transform: translateY(-1px); /* Efeito de levantamento sutil */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Sombra mais pronunciada ao passar o mouse */
+  }
+  
  
