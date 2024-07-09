@@ -66,7 +66,7 @@ export default function RelatorioPonto() {
     }
 
     if (registrosFiltrados.length === 0) {
-      alert('Nenhum registro encontrado para os filtros informados.');
+      alert('Nenhum registro encontrado.');
     } else {
       alert('');
     }
