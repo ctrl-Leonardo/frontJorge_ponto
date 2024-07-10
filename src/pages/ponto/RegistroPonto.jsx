@@ -20,6 +20,7 @@ export default function RegistroPonto() {
       setFuncionarios(response.data);
     } catch (error) {
       setError("Erro ao buscar os funcionários: " + error.message);
+      console.error("Erro ao buscar os funcionários:", error);
     }
   };
 
@@ -31,11 +32,19 @@ export default function RegistroPonto() {
       data: new Date().toLocaleDateString()
     };
 
+    console.log('Tentando registrar o seguinte ponto:', novoRegistro); // Debug para verificar o objeto sendo enviado
+
     try {
-      const response = await axios.post('http://localhost:8080/api/registroponto', novoRegistro);
+      const response = await axios.post('http://localhost:8080/api/registroponto', novoRegistro, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       setRegistros([...registros, response.data]);
+      setError(null);
     } catch (error) {
       setError("Erro ao registrar o ponto: " + error.message);
+      console.error("Erro ao registrar o ponto:", error);
     }
   };
 
@@ -78,7 +87,7 @@ export default function RegistroPonto() {
             <tr>
               <th>Tipo</th>
               <th>Funcionário</th>
-              <th>ID</th> {/* Adiciona uma coluna para o ID */}
+              <th>ID</th>
               <th>Hora</th>
               <th>Data</th>
             </tr>
@@ -88,7 +97,7 @@ export default function RegistroPonto() {
               <tr key={index}>
                 <td>{registro.tipo}</td>
                 <td>{funcionarios.find(f => f.id === registro.funcionarioId)?.nome}</td>
-                <td>{registro.funcionarioId}</td> {/* Exibe o ID do funcionário */}
+                <td>{registro.funcionarioId}</td>
                 <td>{registro.hora}</td>
                 <td>{registro.data}</td>
               </tr>

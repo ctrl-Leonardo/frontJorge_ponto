@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-
 
 export default function Ponto() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -11,9 +10,10 @@ export default function Ponto() {
 
   return (
     <div className="ponto-container">
-      
       <div className="dropdown">
-        
+        <button className="dropdown-toggle" onClick={toggleDropdown}>
+          Menu
+        </button>
         {dropdownOpen && (
           <div className="dropdown-content">
             <NavLink to="/ponto/registro-ponto">Registro de ponto</NavLink>
