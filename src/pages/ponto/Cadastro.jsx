@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {   InputGroup,
-    Col,
-    Button,
-    Row,
-    Container,
-    Card,
-    Form,} from 'react-bootstrap';
+import { InputGroup, Col, Button, Row, Container, Card, Form } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const Cadastro = () => {
@@ -18,6 +12,8 @@ const Cadastro = () => {
     horaEntrada: '',
     horaSaida: ''
   });
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -46,13 +42,22 @@ const Cadastro = () => {
     e.preventDefault();
     try {
       if (id) {
-        await axios.put(`/api/funcionarios/${id}`, formData);
+        await axios.put(`/api/funcionario/${id}`, formData);
       } else {
-        await axios.post('/api/funcionarios', formData);
+        await axios.post('/api/funcionario', formData);
       }
       navigate.push('/');
     } catch (error) {
       console.error('Erro ao salvar o dado:', error);
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`/api/funcionarios?search=${searchTerm}`);
+      setFormData(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar o dado:', error);
     }
   };
 
@@ -66,97 +71,58 @@ const Cadastro = () => {
               <div className="mb-3 mt-4">
                 <h2 className="fw-bold mb-2 text-uppercase">Cadastrar Funcionário</h2>
                 <div className="mt-3">
-                <Form onSubmit={handleSubmit}>
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="nome" as={Col} className="mb-2">
+                      <Form.Label>Nome</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="nome"
+                        value={formData.nome}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="cargo" as={Col} className="mb-2">
+                      <Form.Label>Cargo</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="cargo"
+                        value={formData.cargo}
+                        onChange={handleChange}
+                        required
+                      />
+                    </Form.Group>
                     <Row className="mb-2">
-                        <Form.Group controlId="nome" as={Col} className="mb-2">
-                            <Form.Label>Nome</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="nome"
-                                value={formData.nome}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="cpf" as={Col} className="mb-2">
-                            <Form.Label>CPF</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="cpf"
-                                value={formData.cpf}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
+                      <Form.Group controlId="horaEntrada" as={Col} className="mb-2">
+                        <Form.Label>Hora de Entrada</Form.Label>
+                        <Form.Control
+                          type="time"
+                          name="horaEntrada"
+                          value={formData.horaEntrada}
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                      <Form.Group controlId="horaSaida" as={Col} className="mb-2">
+                        <Form.Label>Hora de Saída</Form.Label>
+                        <Form.Control
+                          type="time"
+                          name="horaSaida"
+                          value={formData.horaSaida}
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
                     </Row>
-                    <Row className="mb-2">
-                        <Form.Group controlId="rg" as={Col} className="mb-2">
-                            <Form.Label>RG</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="rg"
-                                value={formData.rg}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="cpf" as={Col} className="mb-2">
-                            <Form.Label>CPF</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="cpf"
-                                value={formData.cpf}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Form.Group>
-                    </Row>
-                    <Row className="mb-2">
-                        <Form.Group controlId="cargaHoraria" as={Col} className="mb-2">
-                            <Form.Label>Carga Horária</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="cargaHoraria"
-                                value={formData.cargaHoraria}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="dataNascimento" as={Col} className="mb-2">
-                            <Form.Label>Data de Nascimento</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="dataNascimento"
-                                value={formData.dataNascimento}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Row>
-                    <Row className="mb-2">
-                        <Form.Group controlId="email" as={Col} className="mb-2">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                        <Form.Group controlId="horaEntrada" as={Col} className="mb-2">
-                            <Form.Label>Hora de Entrada</Form.Label>
-                            <Form.Control
-                                type="time"
-                                name="horaEntrada"
-                                value={formData.horaEntrada}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Row>
-
-                    <div className="d-grid">
-                        <Button variant="primary" type="submit">
-                            Salvar
-                        </Button>
-                  </div>
-                </Form>
+                    <InputGroup className="mb-3">
+                      <Form.Control
+                        type="text"
+                        placeholder="Buscar Funcionário"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                      <Button onClick={handleSearch}>Pesquisar</Button>
+                    </InputGroup>
+                    <Button type="submit">Salvar</Button>
+                  </Form>
                 </div>
               </div>
             </Card.Body>
@@ -164,10 +130,6 @@ const Cadastro = () => {
         </Col>
       </Row>
     </Container>
-
-
-
-   
   );
 };
 

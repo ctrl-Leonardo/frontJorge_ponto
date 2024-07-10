@@ -1,101 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "./RelatorioPonto.css";
 
 export default function RegistroPonto() {
   const [registros, setRegistros] = useState([]);
   const [horaAtual, setHoraAtual] = useState(new Date().toLocaleTimeString());
   const [funcionarios, setFuncionarios] = useState([]);
-  const [cargos, setCargos] = useState([]);
-  const [selectedFuncionario, setSelectedFuncionario] = useState('');
-  const [selectedCargo, setSelectedCargo] = useState('');
+  const [selectedFuncionarioId, setSelectedFuncionarioId] = useState('');
+  const [selectedTipo, setSelectedTipo] = useState('Entrada');
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchFuncionarios();
-    fetchCargos();
   }, []);
 
   const fetchFuncionarios = async () => {
     try {
-      const response = await fetch('/api/funcionarios');
-      if (!response.ok) {
-        throw new Error("Erro ao buscar os posts: " + response.statusText);
-      }
-      const data = await response.json();
-      setFuncionarios(data);
+      const response = await axios.get('http://localhost:8080/api/funcionarios');
+      setFuncionarios(response.data);
     } catch (error) {
-      setError(error.message);
-    }
-  };
-  
-  const fetchCargos = async () => {
-    try {
-      const response = await fetch('/api/cargos');
-      if (!response.ok) {
-        throw new Error("Erro ao buscar os posts: " + response.statusText);
-      }
-      const data = await response.json();
-      setCargos(data);
-    } catch (error) {
-      setError(error.message);
+      setError("Erro ao buscar os funcionários: " + error.message);
     }
   };
 
-  const horaEntrada = async () => {
+  const registrarPonto = async () => {
     const novoRegistro = {
-      tipo: 'Entrada',
+      tipo: selectedTipo,
       hora: new Date().toLocaleTimeString(),
-      funcionario: selectedFuncionario,
-      cargo: selectedCargo,
+      funcionarioId: selectedFuncionarioId,
       data: new Date().toLocaleDateString()
     };
 
     try {
-      const response = await fetch('/api/registros', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(novoRegistro)
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao registrar a entrada: " + response.statusText);
-      }
-
-      const data = await response.json();
-      setRegistros([...registros, data]);
+      const response = await axios.post('http://localhost:8080/api/registroponto', novoRegistro);
+      setRegistros([...registros, response.data]);
     } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const horaSaida = async () => {
-    const novoRegistro = {
-      tipo: 'Saída',
-      hora: new Date().toLocaleTimeString(),
-      funcionario: selectedFuncionario,
-      cargo: selectedCargo,
-      data: new Date().toLocaleDateString()
-    };
-
-    try {
-      const response = await fetch('/api/registros', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(novoRegistro)
-      });
-
-      if (!response.ok) {
-        throw new Error("Erro ao registrar a saída: " + response.statusText);
-      }
-
-      const data = await response.json();
-      setRegistros([...registros, data]);
-    } catch (error) {
-      setError(error.message);
+      setError("Erro ao registrar o ponto: " + error.message);
     }
   };
 
@@ -112,26 +52,23 @@ export default function RegistroPonto() {
       <div className="label-selecionar">
         <div>
           <label>Funcionário:</label>
-          <select value={selectedFuncionario} onChange={(e) => setSelectedFuncionario(e.target.value)}>
+          <select value={selectedFuncionarioId} onChange={(e) => setSelectedFuncionarioId(e.target.value)}>
             <option value="">Selecione um funcionário</option>
             {funcionarios.map((funcionario) => (
-              <option key={funcionario.id} value={funcionario.nome}>{funcionario.nome}</option>
+              <option key={funcionario.id} value={funcionario.id}>{funcionario.nome}</option>
             ))}
           </select>
         </div>
         <div>
-          <label>Cargo:</label>
-          <select value={selectedCargo} onChange={(e) => setSelectedCargo(e.target.value)}>
-            <option value="">Selecione um cargo</option>
-            {cargos.map((cargo) => (
-              <option key={cargo.id} value={cargo.nome}>{cargo.nome}</option>
-            ))}
+          <label>Tipo:</label>
+          <select value={selectedTipo} onChange={(e) => setSelectedTipo(e.target.value)}>
+            <option value="Entrada">Entrada</option>
+            <option value="Saída">Saída</option>
           </select>
         </div>
       </div>
       <div className="botoes-centrais">
-        <button onClick={horaEntrada} className="botao-entrada">Registrar Entrada</button>
-        <button onClick={horaSaida} className="botao-saida">Registrar Saída</button>
+        <button onClick={registrarPonto} className="botao-entrada">Registrar Ponto</button>
       </div>
       <div className="historico-registros">
         <h3>Histórico de Registros</h3>
@@ -141,6 +78,7 @@ export default function RegistroPonto() {
             <tr>
               <th>Tipo</th>
               <th>Funcionário</th>
+              <th>ID</th> {/* Adiciona uma coluna para o ID */}
               <th>Hora</th>
               <th>Data</th>
             </tr>
@@ -149,7 +87,8 @@ export default function RegistroPonto() {
             {registros.map((registro, index) => (
               <tr key={index}>
                 <td>{registro.tipo}</td>
-                <td>{registro.funcionario}</td>
+                <td>{funcionarios.find(f => f.id === registro.funcionarioId)?.nome}</td>
+                <td>{registro.funcionarioId}</td> {/* Exibe o ID do funcionário */}
                 <td>{registro.hora}</td>
                 <td>{registro.data}</td>
               </tr>

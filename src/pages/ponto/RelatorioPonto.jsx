@@ -71,7 +71,7 @@ export default function RelatorioPonto() {
       alert('');
     }
 
-    alet(registrosFiltrados);
+    alert(registrosFiltrados);
   };
 
   const gerarXML = () => {
@@ -144,7 +144,7 @@ export default function RelatorioPonto() {
           <thead>
             <tr>
               <th>Funcionário</th>
-              <th>Cargo</th>
+             
               <th>Hora</th>
               <th>Data</th>
             </tr>
@@ -153,7 +153,7 @@ export default function RelatorioPonto() {
             {registros.map((registro, index) => (
               <tr key={index}>
                 <td>{registro.funcionario}</td>
-                <td>{registro.cargo}</td>
+              
                 <td>{registro.hora}</td>
                 <td>{registro.data}</td>
               </tr>
